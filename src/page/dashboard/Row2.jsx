@@ -1,0 +1,112 @@
+import {
+  Box,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import Line from "../../page/line/lineChart";
+import React from "react";
+import { DownloadOutlined } from "@mui/icons-material";
+import { Transactions } from "./data";
+
+const Row2 = () => {
+  const theme = useTheme();
+  return (
+    <Stack
+      direction={"row"}
+      sx={{ flexWrap: "wrap", gap: 1.2, marginTop: 1.2}}
+    >
+      <Paper sx={{ maxWidth: 900, flexGrow: 1, minWidth: "400px" }}>
+        <Stack
+          direction={"row"}
+          sx={{
+            alignItems: "center",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <Typography
+              color={theme.palette.secondary.main}
+              sx={{
+                marginBottom: 1,
+                marginTop: 2,
+                marginLeft: 4,
+                fontWeight: "bold",
+              }}
+              variant="h6"
+            >
+              Revenue Generated
+            </Typography>
+            <Typography variant="body2" sx={{ marginLeft: 4 }}>
+              $59,342.32
+            </Typography>
+          </Box>
+
+          <Box>
+            <IconButton sx={{ mr: 3 }}>
+              <DownloadOutlined />
+            </IconButton>
+          </Box>
+        </Stack>
+
+        <Line isDahboard={true} />
+      </Paper>
+
+      <Box
+        sx={{
+          overflow: "auto",
+          borderRadius: "4px",
+          minWidth: "280px",
+          maxHeight: 355,
+          flexGrow: 1,
+        }}
+      >
+        <Paper>
+          <Typography
+            color={theme.palette.secondary.main}
+            sx={{ fontWeight: "bold", padding: 1.2 }}
+            variant="h6"
+          >
+            Recent Transactions
+          </Typography>
+        </Paper>
+
+        {Transactions.map((item) => {
+          return (
+            <Paper
+              sx={{
+                mt: 0.4,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ padding: 1.2 }}>
+                <Typography variant="body1">{item.txId}</Typography>
+                <Typography variant="body2">{item.user} </Typography>
+              </Box>
+              <Typography variant="body1">{item.date} </Typography>
+
+              <Typography
+                sx={{
+                  borderRadius: 1.4,
+                  padding: 1,
+                  backgroundColor: theme.palette.error.main,
+                }}
+                color={theme.palette.getContrastText(theme.palette.error.main)}
+                variant="body2"
+              >
+                ${item.cost}
+              </Typography>
+            </Paper>
+          );
+        })}
+      </Box>
+    </Stack>
+  );
+};
+
+export default Row2;
